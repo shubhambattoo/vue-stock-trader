@@ -5,38 +5,17 @@
 </template>
 
 <script>
-import Stock from '@/components/stocks/Stock.vue';
+import Stock from "@/components/stocks/Stock.vue";
 
 export default {
   name: "stocks",
-  data() {
-    return {
-      stocks: [
-        {
-          id: 1,
-          name: "facebook",
-          price: 20
-        },
-        {
-          id: 2,
-          name: "apple",
-          price: 2000
-        },
-        {
-          id: 3,
-          name: "google",
-          price: 500
-        },
-        {
-          id: 4,
-          name: "uber",
-          price: 750
-        }
-      ]
-    };
-  },
-  components : {
+  components: {
     Stock
+  },
+  computed: {
+    stocks() {
+      return this.$store.getters.stocks;
+    }
   }
 };
 </script>

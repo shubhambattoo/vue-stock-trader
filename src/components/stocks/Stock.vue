@@ -19,7 +19,11 @@
           </div>
           <div class="col-sm-4">
             <div class="float-right">
-              <button class="btn btn-success" :disabled="quantity <= 0 || Number.isInteger(quantity)" @click="buyStock">BUY</button>
+              <button 
+                class="btn btn-success" 
+                :disabled="quantity <= 0 || Number.isInteger(quantity)" 
+                @click="buyStock"
+              >BUY</button>
             </div>
           </div>
         </div>
