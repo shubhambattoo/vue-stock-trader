@@ -7,7 +7,7 @@
       </div>
       <div class="card-body">
         <div class="row">
-          <div class="col-sm-8">
+          <div class="col-sm-6">
             <input
               type="number"
               name="quantity"
@@ -15,15 +15,16 @@
               placeholder="Quantity"
               class="form-control mr-3"
               v-model="quantity"
+              :class="danger"
             />
           </div>
-          <div class="col-sm-4">
+          <div class="col">
             <div class="float-right">
               <button
                 class="btn btn-info"
-                :disabled="quantity <= 0 || Number.isInteger(quantity)"
+                :disabled="insufficientQuantity || quantity <= 0 || Number.isInteger(quantity)"
                 @click="sellStock"
-              >SELL</button>
+              >{{ insufficientQuantity ? "Invalid Quantity" : "SELL"}}</button>
             </div>
           </div>
         </div>
@@ -41,12 +42,23 @@ export default {
       quantity: 0
     };
   },
+  computed : {
+    insufficientQuantity () {
+      return this.quantity > this.stock.quantity
+    },
+    danger() {
+      return {
+        border: this.insufficientQuantity,
+        "border-danger": this.insufficientQuantity
+      };
+    }
+  },
   methods: {
     sellStock() {
       const order = {
         stockId: this.stock.id,
         stockPrice: this.stock.price,
-        quantity: this.quantity
+        quantity: parseInt(this.quantity)
       };
       this.$store.dispatch("sellStock", order);
       this.quantity = null;

@@ -12,10 +12,9 @@
             <a class="nav-link">Stocks</a>
           </router-link>
         </ul>
-
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
+            <a class="nav-link" href="#">End Day</a>
           </li>
           <li class="nav-item dropdown">
             <a
@@ -32,6 +31,9 @@
               <a class="dropdown-item" href="#">Load</a>
             </div>
           </li>
+          <li class="nav-item d-flex align-items-center">
+            <strong class="ml-1">Funds : {{funds | currency}}</strong>
+          </li>
         </ul>
       </div>
     </nav>
@@ -40,7 +42,12 @@
 
 <script>
 export default {
-  name: "app-header"
+  name: "app-header",
+  computed: {
+    funds() {
+      return this.$store.getters.funds;
+    }
+  }
 };
 </script>
 
