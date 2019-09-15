@@ -16,7 +16,7 @@
           <li class="nav-item">
             <button class="btn btn-link nav-link" @click="endDay">End Day</button>
           </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown" @click="isDropdownOpen = !isDropdownOpen">
             <a
               class="nav-link dropdown-toggle"
               href="#"
@@ -26,9 +26,13 @@
               aria-haspopup="true"
               aria-expanded="false"
             >Save & Load</a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="#">Save</a>
-              <a class="dropdown-item" href="#">Load</a>
+            <div
+              class="dropdown-menu"
+              :class="{show : isDropdownOpen}"
+              aria-labelledby="navbarDropdownMenuLink"
+            >
+              <a class="dropdown-item" href="#" @click="saveData">Save</a>
+              <a class="dropdown-item" href="#" @click="loadsData">Load</a>
             </div>
           </li>
           <li class="nav-item d-flex align-items-center">
@@ -45,15 +49,32 @@ import { mapActions } from "vuex";
 
 export default {
   name: "app-header",
+  data() {
+    return {
+      isDropdownOpen: false
+    };
+  },
   computed: {
     funds() {
       return this.$store.getters.funds;
     }
   },
   methods: {
-    ...mapActions(["randomizeStocks"]),
+    ...mapActions(["randomizeStocks", "loadData"]),
     endDay() {
       this.randomizeStocks();
+    },
+    saveData() {
+      const data = {
+        stocks: this.$store.getters.stocks,
+        stocksPortfolio: this.$store.getters.stocksPortfolio,
+        funds: this.$store.getters.funds
+      };
+      // localStorage.removeItem("data");
+      localStorage.setItem("data", JSON.stringify(data));
+    },
+    loadsData () {
+      this.loadData();
     }
   }
 };
