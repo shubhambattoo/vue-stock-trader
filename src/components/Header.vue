@@ -14,7 +14,7 @@
         </ul>
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="#">End Day</a>
+            <button class="btn btn-link nav-link" @click="endDay">End Day</button>
           </li>
           <li class="nav-item dropdown">
             <a
@@ -41,11 +41,19 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "app-header",
   computed: {
     funds() {
       return this.$store.getters.funds;
+    }
+  },
+  methods: {
+    ...mapActions(["randomizeStocks"]),
+    endDay() {
+      this.randomizeStocks();
     }
   }
 };
